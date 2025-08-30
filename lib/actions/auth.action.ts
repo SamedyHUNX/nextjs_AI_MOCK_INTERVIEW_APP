@@ -28,6 +28,13 @@ export async function setSessionCookie(idToken: string) {
 export async function signUp(params: SignUpParams) {
   const { uid, name, email } = params;
 
+  if (!uid || typeof uid !== "string") {
+    return {
+      success: false,
+      message: "Invalid UID provided",
+    };
+  }
+
   try {
     // check if user exists in db
     const userRecord = await db.collection("users").doc(uid).get();
